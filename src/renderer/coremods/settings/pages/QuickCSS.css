@@ -2,15 +2,15 @@
     --cm-text: hsl(210, 17%, 82%);
     --cm-text-hover: hsl(206, 22%, 87%);
     --cm-text-active: hsl(208, 35%, 93%);
-    --cm-text-muted: hsl(215, 8%, 47%);
+    --cm-text-muted: hsl(215, 7%, 47%);
     --cm-background: hsl(216, 28%, 7%);
     --cm-background-dark: hsl(218, 80%, 2%);
-    --cm-background-light: hsl(215, 21%, 11%);
+    --cm-background-light: hsl(218, 22%, 10%);
 }
 
 #replugged-quickcss-wrapper .cm-editor {
     outline: none !important;
-    max-height: 75vh;
+    max-height: 85vh;
     background: var(--cm-background);
     border: 1px solid var(--background-tertiary);
     border-radius: 4px;
@@ -20,6 +20,7 @@
 #replugged-quickcss-wrapper .cm-scroller {
     overflow: auto;
     padding: 3px 5px 3px 0;
+    border-radius: 4px;
     font-size: .875rem;
     font-family: var(--font-code);
     line-height: 1.125rem;
@@ -30,12 +31,12 @@
 #replugged-quickcss-wrapper .cm-scroller::-webkit-scrollbar {
     width: 16px;
     height: 16px;
+    margin: 8px;
 }
 #replugged-quickcss-wrapper .cm-scroller::-webkit-scrollbar-corner {
     background-color: transparent;
 }
 #replugged-quickcss-wrapper .cm-scroller::-webkit-scrollbar-thumb {
-    min-height: 40px;
     background-color: var(--cm-background-light);
 }
 #replugged-quickcss-wrapper .cm-scroller::-webkit-scrollbar-track {
@@ -44,8 +45,13 @@
 #replugged-quickcss-wrapper .cm-scroller::-webkit-scrollbar-thumb,
 #replugged-quickcss-wrapper .cm-scroller::-webkit-scrollbar-track {
     background-clip: padding-box;
-    border: 4px solid transparent;
+    border: 3px solid transparent;
     border-radius: 8px;
+}
+
+#replugged-quickcss-wrapper .cm-line {
+    height: 18px;
+    padding: 0 0 0 1px;
 }
 
 #replugged-quickcss-wrapper .cm-content {
@@ -53,8 +59,9 @@
     padding: 0;
 }
 
-#replugged-quickcss-wrapper .cm-line {
-    padding: 0 0 0 1px;
+#replugged-quickcss-wrapper .cm-content,
+#replugged-quickcss-wrapper .cm-gutter {
+    min-height: 50vh;
 }
 
 #replugged-quickcss-wrapper .cm-gutters {
@@ -73,14 +80,28 @@
 #replugged-quickcss-wrapper .cm-gutterElement span[title="Unfold line"] {
     font-size: 0;
 }
-#replugged-quickcss-wrapper .cm-gutterElement span:before {
-    font-size: .875rem;
-}
 #replugged-quickcss-wrapper .cm-gutterElement span[title="Fold line"]:before {
     content: "v";
+    font-size: .875rem;
 }
 #replugged-quickcss-wrapper .cm-gutterElement span[title="Unfold line"]:before {
     content: ">";
+    font-size: .875rem;
+}
+
+#replugged-quickcss-wrapper .cm-foldPlaceholder {
+    background-color: transparent;
+    border: none;
+    font-size: 0;
+    font-family: inherit;
+    line-height: inherit;
+    color: var(--cm-text-active);
+    text-indent: inherit;
+    white-space: inherit;
+}
+#replugged-quickcss-wrapper .cm-foldPlaceholder:before {
+    content: "···";
+    font-size: .875rem;
 }
 
 #replugged-quickcss-wrapper .cm-foldGutter {
@@ -91,20 +112,6 @@
     opacity: 1;
 }
 
-#replugged-quickcss-wrapper .cm-foldPlaceholder {
-    background-color: transparent;
-    border: none;
-    font-size: 0;
-    font-family: inherit;
-    line-height: inherit;
-    color: var(--cm-text);
-    text-indent: inherit;
-    white-space: inherit;
-}
-#replugged-quickcss-wrapper .cm-foldPlaceholder:before {
-    content: "···";
-    font-size: .875rem;
-}
 #replugged-quickcss-wrapper .cm-activeLine {
     background-color: hsla(var(--white-500-hsl) / .05);
 }
@@ -112,9 +119,15 @@
     background-color: var(--cm-background);
     color: var(--cm-text-active);
 }
-#replugged-quickcss-wrapper .cm-trailingSpace,
-#replugged-quickcss-wrapper .cm-specialChar {
-    color: var(--red-400);
+#replugged-quickcss-wrapper .cm-content ::selection,
+#replugged-quickcss-wrapper .cm-focused .cm-foldPlaceholder,
+#replugged-quickcss-wrapper .cm-selectionLayer .cm-selectionBackground,
+#replugged-quickcss-wrapper .cm-selectionBackground {
+    background-color: hsl(var(--blue-400-hsl) / .3);
+}
+#replugged-quickcss-wrapper .cm-selectionMatch,
+#replugged-quickcss-wrapper .cm-focused .cm-matchingBracket {
+    background-color: hsl(var(--green-400-hsl) / .3);
 }
 #replugged-quickcss-wrapper .cm-focused .cm-nonmatchingBracket {
     background-color: hsl(var(--red-400-hsl) / .3);
@@ -128,19 +141,15 @@
 #replugged-quickcss-wrapper .cm-searchMatch.cm-searchMatch-selected {
     background-color: hsl(var(--yellow-400-hsl) / .6);
 }
-#replugged-quickcss-wrapper .cm-selectionMatch,
-#replugged-quickcss-wrapper .cm-focused .cm-matchingBracket {
-    background-color: hsl(var(--green-400-hsl) / .3);
-}
-#replugged-quickcss-wrapper .cm-selectionBackground,
-#replugged-quickcss-wrapper .cm-selectionLayer .cm-selectionBackground,
-#replugged-quickcss-wrapper .cm-focused .cm-foldPlaceholder,
-#replugged-quickcss-wrapper .cm-content ::selection {
-    background-color: hsl(var(--blue-400-hsl) / .3);
+#replugged-quickcss-wrapper .cm-trailingSpace,
+#replugged-quickcss-wrapper .cm-specialChar {
+    color: var(--red-400);
 }
 
 #replugged-quickcss-wrapper .cm-panels {
     background-color: var(--cm-background-light);
+    border-bottom-right-radius: 4px;
+    border-bottom-left-radius: 4px;
     font-size: 14px;
     font-weight: 500;
     line-height: 16px;
@@ -299,11 +308,31 @@
     padding: 0;
     background: var(--cm-background-light);
     border: 1px solid var(--background-tertiary);
-    border-radius: 0;
+    border-radius: 4px;
     font-size: .875rem;
     font-weight: 500;
     line-height: 1.125rem;
     color: var(--cm-text);
+}
+
+#replugged-quickcss-wrapper .cm-tooltip-autocomplete ul {
+    font-family: var(--font-code);
+    text-indent: 0;
+    white-space: pre-wrap;
+}
+#replugged-quickcss-wrapper .cm-tooltip-autocomplete ul completion-section {
+    border-bottom: 1px solid var(--cm-text);
+}
+#replugged-quickcss-wrapper .cm-tooltip-autocomplete ul li:hover {
+    background: var(--background-modifier-hover);
+    color: var(--cm-text-hover);
+}
+#replugged-quickcss-wrapper .cm-tooltip-autocomplete ul li[aria-selected] {
+    background: var(--background-modifier-selected);
+    color: var(--cm-text-active);
+}
+#replugged-quickcss-wrapper .cm-tooltip-autocomplete-disabled ul li[aria-selected] {
+    color: var(--cm-text-muted);
 }
 
 #replugged-quickcss-wrapper .cm-tooltip ::-webkit-scrollbar {
@@ -332,24 +361,4 @@
 #replugged-quickcss-wrapper .cm-tooltip:hover ::-webkit-scrollbar-thumb,
 #replugged-quickcss-wrapper .cm-tooltip:hover ::-webkit-scrollbar-track {
     visibility: visible;
-}
-
-#replugged-quickcss-wrapper .cm-tooltip-autocomplete ul {
-    font-family: var(--font-code);
-    text-indent: 0;
-    white-space: pre-wrap;
-}
-#replugged-quickcss-wrapper .cm-tooltip-autocomplete ul completion-section {
-    border-bottom: 1px solid var(--cm-text);
-}
-#replugged-quickcss-wrapper .cm-tooltip-autocomplete ul li:hover {
-    background: var(--background-modifier-hover);
-    color: var(--cm-text-hover);
-}
-#replugged-quickcss-wrapper .cm-tooltip-autocomplete ul li[aria-selected] {
-    background: var(--background-modifier-selected);
-    color: var(--cm-text-active);
-}
-#replugged-quickcss-wrapper .cm-tooltip-autocomplete-disabled ul li[aria-selected] {
-    color: var(--cm-text-muted);
 }
